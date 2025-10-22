@@ -94,30 +94,20 @@ We provide two main variants of Dynamic Cheatsheet:
 
 For a comprehensive demonstration of Dynamic Cheatsheet capabilities, please take a look at our `ExampleUsage.ipynb` notebook. This interactive guide illustrates how the cheatsheet evolves using a simple example.
 
-### Reproducing Results
+### Running as an MCP Service
 
-The following command demonstrates how to benchmark Dynamic Cheatsheet with Retrieval and Synthesis on the Game of 24 puzzle:
+We provide an SSE-based MCP service (`dc.py`) that exposes two tools:
+
+1. `prepare_solve_context(session_id: str)` → 返回当前会话的 cheatsheet 与 `generator_prompt.txt`。
+2. `update_cheatsheet(session_id: str, question: str, model_output: str)` → 调用策展 prompt 更新并持久化 cheatsheet。
+
+要启动服务：
 
 ```bash
-python run_benchmark.py --task "GameOf24" --approach "DynamicCheatsheet_RetrievalSynthesis" \
-    --model_name "openai/gpt-4o-2024-11-20" \
-    --additional_flag_for_save_path "DynamicCheatsheet_RetrievalSynthesis" \
-    --save_directory "TEST_RESULTS" \
-    --generator_prompt_path "prompts/generator_prompt.txt" \
-    --cheatsheet_prompt_path "prompts/curator_prompt_for_dc_retrieval_synthesis.txt" \
-    --max_n_samples 10
+python dc.py
 ```
 
-#### Key Parameters:
-
-- `--task`: Specifies the benchmark task (options include: `GameOf24`, `AIME_2025`, `GPQA_Diamond`, `MathEquationBalancer`, *inter alia*).
-- `--approach`: Selects which DC variant or generation baseline to use (options include: `DynamicCheatsheet_RetrievalSynthesis`, `DynamicCheatsheet_RetrievalSynthesis`, `Dynamic_Retrieval`, `FullHistoryAppending`, `default`).
-- `--model_name`: Defines which LLM to use (supports many provider formats); we recommend using smaller and cheaper models (e.g., `openai/gpt-4o-mini`) for initial testing.
-- `--max_n_samples`: Limits the number of examples to process (useful for testing).
-- `--save_directory`: Where to store benchmark results and generated cheatsheets.
-- `--generator_prompt_path` & `--cheatsheet_prompt_path`: Paths to custom prompt templates.
-
-Additional options and customizations can be found in the codebase.
+服务默认监听 `0.0.0.0:8000/sse`，可通过 `MCP_HOST`、`MCP_PORT` 环境变量覆盖。客户端建立 SSE 连接后，按照 FastMCP 协议向 `/tools/<name>/invoke` POST 请求即可完成查询与更新。
 
 ## Citation
 
