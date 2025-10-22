@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="h-full bg-white text-slate-900">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能备忘录 · 基于大语言模型的智能上下文工程(ACE)</title>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+</head>
+<body class="h-full">
+  <div class="min-h-full">
+    <header class="bg-white border-b border-slate-200">
+      <div class="mx-auto max-w-5xl px-6 py-6">
+        <h1 class="text-3xl font-semibold tracking-tight text-slate-900">智能备忘录</h1>
+        <p class="mt-2 text-slate-500">基于大语言模型的智能上下文工程(ACE)</p>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-6 py-10 space-y-12 text-slate-900">
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-slate-900">处理流程</h2>
+        <div class="rounded-xl bg-white p-6 shadow-lg shadow-slate-200/60">
+          <img src="../figures/Illustration.png" alt="Dynamic Cheatsheet 整体流程图" class="w-full rounded-lg shadow-md">
+        </div>
+      </section>
+
+      <section class="space-y-6">
+        <h2 class="text-2xl font-semibold text-slate-900">MCP服务</h2>
+        <p class="text-sm text-slate-500">服务遵循 MCP 标准，通过 Server-Sent Events (SSE) 与客户端保持会话。（地址: http://ip:8000/sse）</p>
+        <div class="grid gap-6 md:grid-cols-2">
+          <article class="rounded-xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/60">
+            <h3 class="text-xl font-medium text-slate-900">prepare_solve_context</h3>
+            <p class="mt-2 text-sm text-slate-500">为业务模型准备上下文。</p>
+            <dl class="mt-4 space-y-3 text-sm">
+              <div>
+                <dt class="font-semibold text-slate-600 uppercase tracking-wide text-xs">请求参数</dt>
+                <dd class="mt-1">
+                  <span class="font-mono text-slate-900">session_id</span>：字符串，会话标识。
+                </dd>
+              </div>
+              <div>
+                <dt class="font-semibold text-slate-600 uppercase tracking-wide text-xs">返回字段</dt>
+                <dd class="mt-2 space-y-1">
+                  <p><span class="font-mono text-slate-900">session_id</span>：原样回传。</p>
+                  <p><span class="font-mono text-slate-900">cheatsheet</span>：当前会话的记忆内容（若无则为 <code>(empty)</code>）。</p>
+                  <p><span class="font-mono text-slate-900">generator_prompt</span>：引导提示词。</p>
+                </dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="rounded-xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/60">
+            <h3 class="text-xl font-medium text-slate-900">update_cheatsheet</h3>
+            <p class="mt-2 text-sm text-slate-500">利用大模型生成并持久化新的 cheatsheet。</p>
+            <dl class="mt-4 space-y-3 text-sm">
+              <div>
+                <dt class="font-semibold text-slate-600 uppercase tracking-wide text-xs">请求参数</dt>
+                <dd class="mt-2 space-y-1">
+                  <p><span class="font-mono text-slate-900">session_id</span>：会话标识。</p>
+                  <p><span class="font-mono text-slate-900">question</span>：原题面/任务描述。</p>
+                  <p><span class="font-mono text-slate-900">model_output</span>：业务模型输出，需包含 <code>FINAL ANSWER</code>。</p>
+                </dd>
+              </div>
+              <div>
+                <dt class="font-semibold text-slate-600 uppercase tracking-wide text-xs">返回字段</dt>
+                <dd class="mt-2 space-y-1">
+                  <p><span class="font-mono text-slate-900">status</span>：固定为 <code>ok</code> 表示成功。</p>
+                  <p><span class="font-mono text-slate-900">session_id</span>：会话标识。</p>
+                </dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200">
+      <div class="mx-auto max-w-5xl px-6 py-6 text-sm text-slate-500">
+        智能备忘录 · 2025 · zhenghong596gm@gmail.com
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
