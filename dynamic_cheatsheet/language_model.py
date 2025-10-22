@@ -47,28 +47,7 @@ class LanguageModel:
                 custom_llm_provider=os.getenv("DEEPSEEK_PROVIDER", "openai"),
             )
         elif self.model_name in [
-            "openai/gpt-4o-mini", "openai/gpt-4o-mini-2024-07-18",
-            "openai/gpt-4o", "openai/gpt-4o-2024-08-06", "openai/gpt-4o-2024-11-20",
-            "openai/gpt-3.5-turbo",
-            "together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo",
-            "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-            "openai/o3-mini", "openai/o3-mini-2025-01-31",
-            "openai/o1", "openai/o1-2024-12-17",
-            "anthropic/claude-3-5-sonnet-latest", "anthropic/claude-3-5-sonnet-20241022",
-            "anthropic/claude-3-5-haiku-latest", "anthropic/claude-3-5-haiku-20241022",
-            "anthropic/claude-3-7-sonnet-latest", "anthropic/claude-3-7-sonnet-20250219",
-            "together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
-            "together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo",
-            "together_ai/deepseek-ai/DeepSeek-R1",
-            "together_ai/deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
-            "together_ai/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
-            "together_ai/Qwen/Qwen2.5-Coder-32B-Instruct",
-            "together_ai/Qwen/QwQ-32B",
-            "together_ai/Qwen/Qwen2-72B-Instruct",
-            "together_ai/Qwen/Qwen2.5-7B-Instruct-Turbo",
-            "together_ai/Qwen/Qwen2.5-72B-Instruct-Turbo",
-            "gemini/gemini-2.0-flash",
-            "ollama/llama3:70b",
+            "deepseek-ai/DeepSeek-V3.2-Exp",
         ]:
             self.client = partial(completion, model=self.model_name)
         else:
