@@ -1,10 +1,11 @@
+import os
 import numpy as np
 import tiktoken
 from typing import List, Tuple
 from sklearn.metrics.pairwise import cosine_similarity
 from .utils.execute_code import extract_and_run_python_code
 from .utils.extractor import extract_answer, extract_cheatsheet
-from litellm import completion
+from litellm import completion, register_model
 from functools import partial
 
 class LanguageModel:
@@ -25,7 +26,27 @@ class LanguageModel:
         self.model_name = model_name
 
         # Load the client for the model based on the model name
-        if self.model_name in [
+        if self.model_name == "deepseek-ai/DeepSeek-V3.2-Exp":
+            base_url = os.getenv("DEEPSEEK_BASE_URL")
+            api_key = os.getenv("DEEPSEEK_API_KEY")
+            if base_url is None or api_key is None:
+                raise ValueError(
+                    "DeepSeek configuration is missing. Please set DEEPSEEK_BASE_URL and DEEPSEEK_API_KEY in config.env."
+                )
+            register_model({
+                self.model_name: {
+                    "litellm_provider": os.getenv("DEEPSEEK_PROVIDER", "openai"),
+                    "mode": "chat",
+                }
+            })
+            self.client = partial(
+                completion,
+                model=self.model_name,
+                api_base=base_url,
+                api_key=api_key,
+                custom_llm_provider=os.getenv("DEEPSEEK_PROVIDER", "openai"),
+            )
+        elif self.model_name in [
             "openai/gpt-4o-mini", "openai/gpt-4o-mini-2024-07-18",
             "openai/gpt-4o", "openai/gpt-4o-2024-08-06", "openai/gpt-4o-2024-11-20",
             "openai/gpt-3.5-turbo",
