@@ -48,7 +48,7 @@ def _parse_int(value: str, fallback: int) -> int:
         return fallback
 
 
-DEFAULT_CURATOR_TEMPERATURE = _parse_float(os.getenv(CURATOR_TEMPERATURE_ENV), 0.0)
+DEFAULT_CURATOR_TEMPERATURE = _parse_float(os.getenv(CURATOR_TEMPERATURE_ENV), 0.2)
 DEFAULT_CURATOR_MAX_TOKENS = _parse_int(os.getenv(CURATOR_MAX_TOKENS_ENV), 4096)
 
 
@@ -208,10 +208,6 @@ def update_cheatsheet(
     return {
         "status": "ok",
         "session_id": session_id,
-        # "cheatsheet_before": current_cheatsheet,
-        # "cheatsheet_after": new_cheatsheet,
-        # "curator_output": curator_output,
-        # "curator_prompt": curator_prompt,
     }
 
 
