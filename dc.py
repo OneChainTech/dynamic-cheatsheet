@@ -1,5 +1,5 @@
 """
-MCP SSE 服务：提供动态 Cheatsheet 的查询与更新工具。
+MCP StreamableHTTP 服务：提供动态 Cheatsheet 的查询与更新工具。
 
 工具概览
 --------
@@ -214,7 +214,7 @@ def update_cheatsheet(
 # --------------------------- 入口函数 --------------------------- #
 def main() -> None:
     """
-    启动 FastMCP SSE 服务。
+    启动 FastMCP StreamableHTTP 服务。
     默认监听 0.0.0.0:8000，可通过环境变量 MCP_HOST / MCP_PORT 覆盖。
     """
     load_dotenv("config.env")
@@ -225,7 +225,7 @@ def main() -> None:
     server.settings.host = host  # type: ignore[attr-defined]
     server.settings.port = port  # type: ignore[attr-defined]
 
-    server.run(transport="sse")
+    server.run(transport="streamable-http")
 
 
 if __name__ == "__main__":

@@ -96,7 +96,7 @@ For a comprehensive demonstration of Dynamic Cheatsheet capabilities, please tak
 
 ### Running as an MCP Service
 
-We provide an SSE-based MCP service (`dc.py`) that exposes two tools:
+We provide a StreamableHTTP-based MCP service (`dc.py`) that exposes two tools:
 
 1. `prepare_solve_context(session_id: str)` → 返回当前会话的 cheatsheet 与 `generator_prompt.txt`。
 2. `update_cheatsheet(session_id: str, question: str, model_output: str)` → 调用策展 prompt 更新并持久化 cheatsheet。
@@ -107,7 +107,7 @@ We provide an SSE-based MCP service (`dc.py`) that exposes two tools:
 python dc.py
 ```
 
-服务默认监听 `0.0.0.0:8000/sse`，可通过 `MCP_HOST`、`MCP_PORT` 环境变量覆盖。客户端建立 SSE 连接后，按照 FastMCP 协议向 `/tools/<name>/invoke` POST 请求即可完成查询与更新。
+服务默认监听 `0.0.0.0:8000/mcp`，可通过 `MCP_HOST`、`MCP_PORT` 环境变量覆盖。客户端通过 StreamableHTTP 协议向 `/mcp` 发送请求，即可按照 FastMCP 规范完成查询与更新。
 
 ## Citation
 
