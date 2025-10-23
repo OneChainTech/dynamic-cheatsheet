@@ -24,10 +24,37 @@
       </section>
 
       <section class="space-y-6">
+        <h2 class="text-2xl font-semibold text-slate-900">对照测试摘要</h2>
+        <div class="rounded-xl bg-white p-6 shadow-lg shadow-slate-200/60 space-y-4">
+          <p class="text-sm text-slate-500">统一使用温度 0.2，分别采样客服 74 条、知识问答 100 条、金融问答 74 条，执行备忘录 A/B 对照测试。</p>
+          <div class="space-y-2 text-sm">
+            <p class="font-semibold text-slate-700">测试数据集</p>
+            <ul class="list-disc pl-5 space-y-1 text-slate-600">
+              <li>客服问答：Kaludi/Customer-Support-Responses</li>
+              <li>知识问答：SQuAD v1.1（dev 集）</li>
+              <li>金融分析：lighthouzai/FinQABench</li>
+            </ul>
+          </div>
+          <div class="space-y-2 text-sm">
+            <p class="font-semibold text-slate-700">测试结果图</p>
+            <img src="../figures/memo_delta_summary.png" alt="备忘录提升幅度对比" class="w-full rounded-lg shadow-md">
+          </div>
+          <div class="space-y-2 text-sm text-slate-600 leading-relaxed">
+            <p class="font-semibold text-slate-700">测试结论</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>客服场景（74 样本）ROUGE-L 提升约 33%。</li>
+              <li>知识问答（100 样本）提升约 10%。</li>
+              <li>金融分析（74 样本）提升约 11.5%。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="space-y-6">
         <h2 class="text-2xl font-semibold text-slate-900">MCP服务</h2>
         <p class="text-sm text-slate-500">服务遵循 MCP 标准，通过 Server-Sent Events (SSE) 与客户端保持会话。（地址: http://ip:8000/sse）</p>
         <div class="grid gap-6 md:grid-cols-2">
-          <article class="rounded-xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/60">
+          <article class="rounded-xl bg-white p-6 shadow-lg shadow-slate-200/60">
             <h3 class="text-xl font-medium text-slate-900">prepare_solve_context</h3>
             <p class="mt-2 text-sm text-slate-500">为业务模型准备上下文。</p>
             <dl class="mt-4 space-y-3 text-sm">
@@ -47,7 +74,7 @@
             </dl>
           </article>
 
-          <article class="rounded-xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/60">
+          <article class="rounded-xl bg-white p-6 shadow-lg shadow-slate-200/60">
             <h3 class="text-xl font-medium text-slate-900">update_cheatsheet</h3>
             <p class="mt-2 text-sm text-slate-500">利用大模型生成并持久化新的 cheatsheet。</p>
             <dl class="mt-4 space-y-3 text-sm">
