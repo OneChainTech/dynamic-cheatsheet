@@ -133,7 +133,7 @@ server = FastMCP(
     name="dynamic-cheatsheet-service",
     instructions=(
         "提供 Dynamic Cheatsheet 所需的查询与更新工具："
-        "1) prepare_solve_context -> 基于 session 返回当前 cheatsheet 与 generator prompt；"
+        "1) prepare_solve_context -> 基于 session 返回当前 cheatsheet；"
         "2) update_cheatsheet -> 基于 session 与模型输出生成并持久化新的 cheatsheet。"
     ),
 )
@@ -145,7 +145,7 @@ _init_db()
     name="prepare_solve_context",
     description=(
         "获取 Solve 模块执行前所需的上下文信息。"
-        "需提供 session_id，返回对应 cheatsheet 与 generator prompt。"
+        "需提供 session_id，仅返回对应 cheatsheet。"
     ),
 )
 def prepare_solve_context(session_id: str) -> Dict[str, Any]:
@@ -153,11 +153,9 @@ def prepare_solve_context(session_id: str) -> Dict[str, Any]:
     读取求解阶段所需的核心上下文。
     """
     cheatsheet = _get_cheatsheet(session_id=session_id)
-    generator_prompt = _read_prompt(GENERATOR_PROMPT_FILE)
     return {
         "session_id": session_id,
         "cheatsheet": cheatsheet,
-        "generator_prompt": generator_prompt,
     }
 
 
